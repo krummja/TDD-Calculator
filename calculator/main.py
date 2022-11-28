@@ -12,10 +12,17 @@ class Calculator:
         """
         if input:
             arguments = Calculator.parse_input(input)
+            
             if len(arguments) > 2:
                 message: str = "Input list must consist of 0, 1, or 2 integers."
                 raise ValueError(message)
+
+            if any([not isinstance(arg, int) for arg in arguments]):
+                message: str = "Input list must consist solely of integers."
+                raise ValueError(message)
+            
             return sum(arguments)
+        
         return 0
 
     @staticmethod

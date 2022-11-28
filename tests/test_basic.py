@@ -1,5 +1,6 @@
 from calculator.main import main
 import pytest
+import re
 
 
 def test_too_many_arguments_exception():
@@ -7,7 +8,9 @@ def test_too_many_arguments_exception():
     Test that an Exception is raised when the input string conists of more
     than two comma-separated integers.
     """
-    with pytest.raises(ValueError):
+    message: str = "Input list must consist of 0, 1, or 2 integers."
+    
+    with pytest.raises(ValueError, match=message):
         main("1, 2, 3")
 
 
@@ -19,6 +22,8 @@ def test_two_arguments_no_exception():
         assert False, f"'1, 2' raised an exception {exc}"
 
 
-def test_non_integer_argument_exception():
+def test_string_argument_exception():
     """Test that an Exception is thrown passing a non-integer argument."""
-    main("1, X")
+    message: str = r"invalid literal for int\(\) with base 10: ' [A-Za-z]*"
+    with pytest.raises(ValueError, match=message):
+        main("1, X")
