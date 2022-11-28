@@ -11,15 +11,20 @@ class Calculator:
         integers.
         """
         if input:
-            pass
+            arguments = Calculator.parse_input(input)
+            if len(arguments) > 2:
+                message: str = "Input list must consist of 0, 1, or 2 integers."
+                raise ValueError(message)
+            return sum(arguments)
         return 0
+
+    @staticmethod
+    def parse_input(input: str) -> list[int]:
+        """Parse a comma-separated list of strings into a list of integers."""
+        return [int(arg) for arg in input.split(",")]
 
 
 def main(input: str = "") -> None:
     """Application entrypoint."""
     result = Calculator.add(input)
     print(result)
-
-
-if __name__ == '__main__':
-    main()
